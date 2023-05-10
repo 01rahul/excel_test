@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.coralogix</groupId>
 	<artifactId>my-app</artifactId>
-	<version>0.0.${v}-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>my-app</name>
 	<description>Calculator project for demonstrating CI/CD pipelines</description>
 
