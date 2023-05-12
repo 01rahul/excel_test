@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build Jar') {
+            steps {
+                checkout([$class: 'GitSCM',
+                    branches: [[name: '*/main' ]],
+                    extensions: scm.extensions,
+                    userRemoteConfigs: [[
+                        url: 'https://gitlab.com/careedge/care-java.git',
+                        credentialsId: 'f3480ddc-1a2a-44c7-8d4c-57673dc4a4f1'
+                ]]
+            ])
+ 
+            }
+        }
+        /*stage('Publish') {
+            steps {
+                sh './mvnw package'
+            }
+            post {
+                success {
+                    archiveArtifacts 'target/*.jar'
+                }
+            }
+        }*/
+        stage('Zip Jar Files') {
+            steps {
+                script {
+                    zip zipFile: "${env.BUILD_NUMBER}.zip", archive: false, glob: 'target/*.jar'
+                    archiveArtifacts artifacts: "${env.BUILD_NUMBER}.zip", fingerprint: true
+                }
+            }
+        }
+    }
+}
